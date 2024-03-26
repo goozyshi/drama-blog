@@ -1,0 +1,132 @@
+/**
+* Import Tailwind CSS
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/**
+* Vitepress Custom CSS
+*/
+
+:root {
+  /* Custom vars */
+  --ct-c-shadow: #d7d7d7;
+
+  --vp-c-brand-1: var(--vp-c-neutral);
+  --vp-c-brand-2: var(--vp-c-text-1);
+  --vp-c-brand-3: var(--vp-c-text-2);
+  --vp-c-brand-soft: var(--vp-c-text-3);
+
+  --vp-c-brand-soft: var(--vp-c-text-3);
+
+  /* Profile */
+  --ct-avatar-border: white;
+  --ct-avatar-large: 10rem;
+  --ct-avatar-medium: 8rem;
+  --ct-avatar-small: 6rem;
+}
+
+.VPContent>.VPHome {
+  margin-bottom: 4rem;
+}
+
+header.VPNav a.title {
+  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* font-family: "Times New Roman", Georgia, sans-serif;
+   */
+  font-size: 1.4rem;
+  font-weight: 100;
+}
+
+footer a {
+  color: var(--vp-c-text-1);
+}
+
+a.VPSocialLink[aria-label="mastodon"]>svg {
+  width: 19.5px;
+  height: 19.5px;
+}
+
+/* Font Styles */
+.digit {
+  font-family: monospace;
+}
+
+/* Special pages only */
+.doc-page h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.doc-page h1::first-letter {
+  font-size: 140%;
+}
+
+.doc-page h1+p {
+  text-align: center;
+  font-family: monospace;
+  font-size: 14px;
+  color: var(--vp-c-text-3);
+}
+
+.doc-page h1,
+.doc-page h2,
+.doc-page h3 {
+  font-family: "Times New Roman", Georgia, sans-serif;
+}
+
+.doc-page nav.pager-nav {
+  padding-top: 0;
+}
+
+.doc-page .pager {
+  display: none;
+}
+
+.doc-page li a {
+  color: var(--vp-c-text-1);
+}
+
+.doc-page li code {
+  color: var(--vp-c-text-3);
+  font-size: 0.7rem;
+  vertical-align: middle;
+}
+
+.doc-page li img {
+  border-radius: 50%;
+  border: 1px solid white;
+  background-color: white;
+  box-shadow: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: inline-block;
+  margin-right: 0.1rem;
+  margin-bottom: -0.35rem;
+}
+
+.doc-page ul>li>em {
+  color: var(--vp-c-text-3);
+}
+
+.doc-page ul>li>a:hover {
+  text-decoration: underline;
+  color: var(--vp-c-neutral);
+}
+
+/* Hide Scrollbar */
+.hide-scrollbar {
+  /* Internet Explorer 10+ */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  /* Safari and Chrome */
+  display: none;
+}

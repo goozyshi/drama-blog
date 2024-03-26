@@ -1,0 +1,3 @@
+---
+pageClass: doc-page
+---
