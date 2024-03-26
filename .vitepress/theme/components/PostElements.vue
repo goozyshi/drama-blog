@@ -8,15 +8,15 @@
     <span
       v-if="post.datetime"
       :class="$style.elementItem"
-      :tooltip="moment(post.datetime).format('dddd')"
+      :tooltip="dayjs(post.datetime).format('dddd')"
     >
-      {{ moment(post.datetime).format("LL") }}
+      {{ dayjs(post.datetime).format('MMM DD, YYYY') }}
     </span>
     <Divider v-if="post.spot" custom-class="circle-sm inline-block m-2" />
     <span
       v-if="post.spot"
       :class="$style.elementItem"
-      :tooltip="post.location?.district"
+      :tooltip="post.location"
     >
       {{ `${post.location?.city || ""} ${post.spot}` }}
     </span>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import moment from "moment-timezone";
+import dayjs from "dayjs";
 import { useData, onContentUpdated } from "vitepress";
 import { ref } from "vue";
 import { data as allPosts } from "../../tools/post.data.mjs";

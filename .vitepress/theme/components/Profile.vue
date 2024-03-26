@@ -5,20 +5,10 @@
       {{ nickname }}
     </h1>
     <p :class="$style.bio">
-      <Divider custom-class="circle align-middle inline-block m-2" />
       <span>{{ bio }}</span>
     </p>
     <ClientOnly>
-      <iframe
-        title="Spotify Embed: Recommendation Playlist "
-        src="https://open.spotify.com/embed/playlist/3yvqKpNtZ5vRW7USHFuZec?utm_source=generator&theme=0"
-        width="100%"
-        height="100%"
-        style="min-height: '360px'"
-        frameBorder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-      />
+      
     </ClientOnly>
   </div>
 </template>

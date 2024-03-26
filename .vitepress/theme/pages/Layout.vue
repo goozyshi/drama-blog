@@ -3,7 +3,7 @@ import DefaultTheme from "vitepress/theme";
 
 const { Layout } = DefaultTheme;
 import Pagination from "../components/Pagination.vue";
-
+import Comments from "../components/Comments.vue";
 import Postil from "../components/Postil.vue";
 </script>
 
@@ -15,7 +15,7 @@ import Postil from "../components/Postil.vue";
 
     <template #doc-after>
       <Pagination />
-      <!-- <Comments /> -->
+      <Comments />
     </template>
   </Layout>
 </template>

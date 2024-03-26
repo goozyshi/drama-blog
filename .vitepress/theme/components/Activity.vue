@@ -45,7 +45,6 @@ onContentUpdated(() => {
 <template>
   <div :class="$style.postListBox">
     <PostList
-      date-format="ll"
       :post-list="postList"
     />
   </div>

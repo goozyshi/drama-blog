@@ -15,7 +15,6 @@
         </div>
       </div>
       <PostList
-        date-format="ll"
         :post-list="postsBySort[selectedSort]"
       />
     </div>

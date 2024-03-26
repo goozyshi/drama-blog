@@ -42,4 +42,4 @@ const scriptGTagData = [
     gtag('config', '${gMeasurementID}');`
 ]
 
-export const gaConfig = [ scriptGTag, scriptGTagData ]
+export const gaConfig = [scriptGTag, scriptGTagData]

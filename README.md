@@ -17,7 +17,7 @@ $ pnpm vitepress init
 # Theme 选择 Default Theme + Customization
 ```
 
-#### Tailwind Css
+#### Tailwind CSS
 
 ```sh
 # https://tailwindcss.com/docs/guides/vite#vue

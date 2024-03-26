@@ -19,7 +19,6 @@
         <div :class="$style.transientBox" />
       </div>
       <PostList
-        date-format="ll"
         :post-list="postsByTag[selectedTag]"
       />
     </div>
