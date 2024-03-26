@@ -1,3 +1,6 @@
+/**
+ * Search Optimization
+ */
 export function tokenize(text) {
   // Firefox doesn't support Intl.Segmenter currently
   if (!("Segmenter" in Intl)) {
@@ -11,4 +14,17 @@ export function tokenize(text) {
   const uniqueSegs = Array.from(new Set(segs));
   const result = uniqueSegs.filter(w => !(/^\s+$/).test(w));
   return result;
+}
+
+/**
+ * Posts Handle
+ */
+
+export const toDashedHash = words => words.split(" ").join("-").toLowerCase();
+
+export const findPostIndex = (postList, page) => {
+  return postList.findIndex(p => p.frontmatter.title === page.title) || 0
+}
+export const findPost = (postList, page) => {
+  return postList[findPostIndex(postList, page)];
 }

@@ -27,7 +27,7 @@ export default {
       link: "/posts",
     },
     {
-      text: "Archives",
+      text: "ARCHIVES",
       link: "/archives",
     },
     {

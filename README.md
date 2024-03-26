@@ -62,6 +62,13 @@ add to `style.css`
 $ pnpm i -S dotenv
 ```
 
+Read Time
+
+```sh
+#
+$ pnpm i -D reading-time
+```
+
 Enhanced Markdown
 
 ```sh

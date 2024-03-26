@@ -1,3 +1,5 @@
 ---
 pageClass: doc-page
 ---
+
+<Guide />

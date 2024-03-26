@@ -1,5 +1,14 @@
 ---
+date: 2024-03-26
+category: Frontend
+tags:
+  - Network
+  - Vue
+  - Node.js
+spot: 巷寓
+location: 深圳，海滨社区
 outline: deep
+draft: false
 ---
 
 # Markdown Extension Examples
