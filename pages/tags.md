@@ -4,4 +4,6 @@ description: Posts Tags
 layout: page
 ---
 
-<Tags />
+<ClientOnly>
+  <Tags />
+</ClientOnly>

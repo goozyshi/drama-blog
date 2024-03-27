@@ -4,4 +4,6 @@ description: All Notes
 layout: page
 ---
 
-<Posts />
+<ClientOnly>
+  <Posts />
+</ClientOnly>

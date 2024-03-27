@@ -2,4 +2,6 @@
 pageClass: doc-page
 ---
 
-<Guide />
+<ClientOnly>
+  <Guide />
+</ClientOnly>

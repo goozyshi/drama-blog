@@ -4,4 +4,6 @@ description: Posts Categories
 layout: page
 ---
 
-<Archives />
+<ClientOnly>
+  <Archives />
+</ClientOnly>

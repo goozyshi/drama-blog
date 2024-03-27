@@ -4,4 +4,6 @@ description: About Me
 layout: page
 ---
 
-<About />
+<ClientOnly>
+  <About />
+</ClientOnly>
