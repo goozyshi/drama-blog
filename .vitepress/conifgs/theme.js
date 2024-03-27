@@ -12,7 +12,7 @@ export default {
     pattern: "https://github.com/goozyshi/drama-blog/edit/main/:path",
   },
   footer: {
-    message: 'Life is drama.',
+    message: '<a href="https://www.youtube.com/watch?v=AkugjXUj5sM" target="_blank">Drama</a> is a song written by IU.',
     copyright: `MIT Licensed | Copyright © 2019-${new Date().getFullYear()} <a href="https://github.com/goozyshi">goozyshi</a>`,
   },
   lastUpdated: {
