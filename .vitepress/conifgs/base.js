@@ -11,7 +11,7 @@ export const withBaseURL = urlPath => {
   return path.join(BASE_PATH || "/", urlPath)
 }
 
-export const isProduction = () => env.PRODUCTION_MODE
+export const isProduction = () => !BASE_PATH
 
 /**
  * github 评论 接入

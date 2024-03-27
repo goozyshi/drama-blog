@@ -7,7 +7,6 @@ tags:
 spot: 众冠时代广场A座写字楼
 location: 深圳，留仙大道
 outline: deep
-draft: false
 ---
 
 # EJS 基本使用以及实现
