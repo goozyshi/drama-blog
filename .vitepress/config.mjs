@@ -10,6 +10,7 @@ export default defineConfig({
   base: BASE_PATH,
   cleanUrls: true,
   lastUpdated: true,
+  ignoreDeadLinks: true,
   head: [
     [ "meta", { name: "author", content: "Goozyshi", }, ],
     [ "link", { rel: "icon", type: "image/png", href: withBaseURL("/avatar.png") }, ],
