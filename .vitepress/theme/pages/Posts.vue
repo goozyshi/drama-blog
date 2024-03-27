@@ -1,5 +1,5 @@
 <template>
-  <Container :class="$style.container">
+  <Container class="!block">
     <div :class="$style.main">
       <div :class="$style.badgeBox">
         <Badge
@@ -50,9 +50,7 @@ const years = Object.keys(postsByYear).sort().reverse();
   module
   scoped
 >
-.container {
-  display: block;
-}
+
 
 .main {
   margin: 0 auto;

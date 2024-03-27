@@ -1,38 +1,12 @@
 <template>
-  <div :class="$style.container">
+  <div class="
+    justify-center pt-6 px-6 pb-0
+    sm:pt-12 sm:px-16
+    md:px-24
+    min-[960px]:flex min-[960px]:px-16
+    xl:pt-16 lg:px-32
+    "
+  >
     <slot />
   </div>
 </template>
-
-<style module scoped>
-.container {
-  justify-content: center;
-  padding: 1.5rem 1.5rem 0;
-}
-
-@media (min-width: 640px) {
-  .container {
-    padding: 3rem 4rem 0;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding: 3rem 6rem 0;
-  }
-}
-
-@media (min-width: 960px) {
-  .container {
-    padding: 3rem 4rem 0;
-    display: flex;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    padding: 4rem 8rem 0;
-    display: flex;
-  }
-}
-</style>

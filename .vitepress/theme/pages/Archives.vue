@@ -1,5 +1,5 @@
 <template>
-  <Container :class="$style.container">
+  <Container class="!block">
     <div :class="$style.main">
       <div :class="$style.sortContainer">
         <div :class="$style.sortList">
@@ -33,7 +33,7 @@ import PostList from "../components/PostList.vue";
 
 const postsBySort = {};
 allPosts.forEach((post) => {
-  const sort = post.frontmatter.category.toUpperCase();
+  const sort = post.frontmatter.category?.toUpperCase();
   postsBySort[sort] = postsBySort[sort] || [];
   postsBySort[sort].push(post);
 });
@@ -79,9 +79,7 @@ onMounted(() => {
   module
   scoped
 >
-.container {
-  display: block;
-}
+
 
 .main {
   margin: 0 auto;

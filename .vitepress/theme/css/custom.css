@@ -26,6 +26,7 @@
   --ct-avatar-large: 10rem;
   --ct-avatar-medium: 8rem;
   --ct-avatar-small: 6rem;
+  --post-list-min-height: 29rem;
 }
 
 .VPContent>.VPHome {

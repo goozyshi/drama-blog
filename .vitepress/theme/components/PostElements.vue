@@ -94,9 +94,4 @@ span.elementItem[tooltip]:hover:after {
   opacity: 1;
   transition-delay: 0.5s;
 }
-
-.dot {
-  color: var(--vp-c-text-2);
-  margin: 0.5rem;
-}
 </style>

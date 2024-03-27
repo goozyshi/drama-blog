@@ -1,5 +1,5 @@
 <template>
-  <Container :class="$style.container">
+  <Container class="!block">
     <div :class="$style.main">
       <div :class="$style.tagContainer">
         <div
@@ -72,9 +72,7 @@ onMounted(() => {
 </script>
 
 <style module scoped>
-.container {
-  display: block;
-}
+
 
 .main {
   margin: 0 auto;

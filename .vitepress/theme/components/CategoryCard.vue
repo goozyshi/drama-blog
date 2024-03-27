@@ -14,7 +14,7 @@
     image: String,
   })
 
-  const { category, image, title, desc } = props
+  const { category, image, desc } = props
 </script>
 
 <template>

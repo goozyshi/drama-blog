@@ -7,12 +7,12 @@ const { frontmatter } = useData();
 <template>
   <div
     v-if="frontmatter.category || frontmatter.tags?.length"
-    class="annotations"
+    class="border-t border-[var(--vp-c-divider)] text-[14px] p-0 pt-4 pb-6 "
   >
     <a
       v-if="frontmatter.category"
-      :href="withBase(`/sorts#${toDashedHash(frontmatter.category)}`)"
-      class="badge sort"
+      :href="withBase(`/archives#${toDashedHash(frontmatter.category)}`)"
+      class="inline-block rounded font-bold whitespace-nowrap py-px px-2 text-[var(--vp-c-neutral-inverse)] bg-[var(--vp-c-brand-2)] hover:bg-[var(--vp-c-neutral)]"
     >
       {{ frontmatter.category?.toUpperCase() }}
     </a>
@@ -21,52 +21,24 @@ const { frontmatter } = useData();
       v-for="tag in frontmatter.tags"
       :key="tag"
       :href="withBase(`/tags#${toDashedHash(tag)}`)"
-      class="badge tag"
+      class="
+        inline-block
+        rounded
+        font-bold
+        whitespace-nowrap
+        leading-5
+        border-2
+        border-[var(--vp-c-brand-2)]
+        py-px
+        px-1.5
+        mt-4
+        mr-3
+        text-[var(--vp-c-brand-2)]
+        hover:text-[var(--vp-c-neutral-inverse)]
+        hover:bg-[var(--vp-c-brand-2)]
+      "
     >
       {{ tag }}
     </a>
   </div>
 </template>
-<style scoped>
-.annotations {
-  border-top: 1px solid var(--vp-c-divider);
-  padding: 1rem 0 1.5rem 0;
-  font-size: 14px;
-}
-
-.badge {
-  border-radius: 4px;
-  display: inline-block;
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-.sort {
-  color: var(--vp-c-neutral-inverse);
-  background-color: var(--vp-c-brand-2);
-  padding: 1px 8px;
-}
-
-.sort:hover {
-  background-color: var(--vp-c-neutral);
-}
-
-.dot {
-  margin: 1px 0.7rem;
-  display: inline-block;
-}
-
-.tag {
-  color: var(--vp-c-brand-2);
-  line-height: 20px;
-  border: 2px solid var(--vp-c-brand-2);
-  padding: 1px 5px;
-  margin-top: 1rem;
-  margin-right: 0.7rem;
-}
-
-.tag:hover {
-  background-color: var(--vp-c-brand-2);
-  color: var(--vp-c-neutral-inverse);
-}
-</style>

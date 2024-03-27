@@ -1,4 +1,33 @@
-<!-- Mostly copied from: https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/components/VPDocFooter.vue -->
+<script setup>
+import { useData, onContentUpdated } from 'vitepress'
+import { ref } from 'vue'
+import { data as allPosts } from '../../tools/post.data.mjs'
+import { findPostIndex } from '../../tools/utils'
+
+const { page, theme } = useData()
+const control = ref({})
+
+function renderPrevNext() {
+  const index = findPostIndex(allPosts, page.value)
+  const prevPost = allPosts[index - 1]
+  const nextPost = allPosts[index + 1]
+  const prev = prevPost && {
+    text: prevPost.frontmatter.title,
+    link: prevPost.url
+  }
+  const next = nextPost && {
+    text: nextPost.frontmatter.title,
+    link: nextPost.url
+  }
+  control.value = { prev, next }
+}
+
+renderPrevNext()
+
+onContentUpdated(() => {
+  renderPrevNext()
+})
+</script>
 <template>
   <nav
     v-if="control.prev?.link || control.next?.link"
@@ -35,37 +64,6 @@
     </div>
   </nav>
 </template>
-
-<script setup>
-import { useData, onContentUpdated } from "vitepress";
-import { ref } from "vue";
-import { data as allPosts } from "../../tools/post.data.mjs";
-import { findPostIndex } from "../../tools/utils";
-
-const { page, theme } = useData();
-const control = ref({});
-
-function renderPrevNext() {
-  const index = findPostIndex(allPosts, page.value);
-  const prevPost = allPosts[index - 1];
-  const nextPost = allPosts[index + 1];
-  const prev = prevPost && {
-    text: prevPost.frontmatter.title,
-    link: prevPost.url
-  };
-  const next = nextPost && {
-    text: nextPost.frontmatter.title,
-    link: nextPost.url
-  };
-  control.value = { prev, next };
-}
-
-renderPrevNext();
-
-onContentUpdated(() => {
-  renderPrevNext();
-});
-</script>
 
 <style module scoped>
 .prevNext {

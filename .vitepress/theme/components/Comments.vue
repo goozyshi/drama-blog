@@ -11,7 +11,7 @@ const getGiscusTheme = () => (isDark.value ? 'dark' : 'light')
 const giscusOptions = ref({
   theme: getGiscusTheme(),
   show: false,
-});
+})
 
 function reloadGiscus() {
   giscusOptions.value = {
@@ -29,7 +29,7 @@ onContentUpdated(() => {
   const element = document.querySelector("button.VPSwitchAppearance")
   if (!element) return
   observer.observe(element, { attributes: true })
-});
+})
 </script>
 
 <template>
@@ -46,7 +46,7 @@ onContentUpdated(() => {
       emit-metadata="0"
       input-position="top"
       :theme="giscusOptions.theme"
-      lang="zh-CN"
+      lang="en"
     />
   </div>
 </template>

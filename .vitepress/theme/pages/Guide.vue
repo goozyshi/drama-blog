@@ -1,7 +1,6 @@
 <script setup>
   import CategoryCard from "../components/CategoryCard.vue";
   import { SITE_DATA } from '../../tools/sitedata'
-  console.log(SITE_DATA)
 </script>
 <template>
   <div class="w-full">
