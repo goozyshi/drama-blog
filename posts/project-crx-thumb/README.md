@@ -3,7 +3,7 @@ date: 2021-01-11
 category: Project
 tags:
   - Vue
-  - chrome extension
+  - Chrome Extension
   - Element UI
 spot: 留学生创业大厦
 location: 深圳，科苑

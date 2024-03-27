@@ -3,7 +3,7 @@ date: 2020-06-19
 category: Frontend
 tags:
   - Network
-  - fetch
+  - Fetch
 spot: 福海苑
 location: 深圳，北头社区
 outline: deep

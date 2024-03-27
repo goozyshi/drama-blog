@@ -57,7 +57,13 @@ npm install express ejs --save
 ```
 
 结果最终使用 ejs 模板输出一个 静态网页：
-![](https://cdn.nlark.com/yuque/0/2023/png/608421/1687964780601-42f54f82-a74c-4fee-a80e-8f89558c9438.png#averageHue=%23fdfdfd&clientId=u0ea4a666-13b8-4&from=paste&id=u7a0810aa&originHeight=1022&originWidth=2738&originalType=url&ratio=2&rotation=0&showTitle=false&status=done&style=none&taskId=ud908eda0-d36d-49f8-bc47-ed602b9a3b6&title=)
+![](./static.png)
+
+<figure>
+  <figcaption>
+    静态页面
+  </figcaption>
+</figure>
 
 ### **新建 app.js**
 

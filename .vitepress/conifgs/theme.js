@@ -23,7 +23,7 @@ export default {
   },
   nav: [
     {
-      text: "POSTS",
+      text: "TIMELINE",
       link: "/posts",
     },
     {
