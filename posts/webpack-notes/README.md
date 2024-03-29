@@ -3,7 +3,7 @@ date: 2023-06-23
 category: Frontend
 tags:
   - webpack
-  - notes
+  - Notes
 spot: 家里
 location: 汕尾, 上英镇
 outline: deep
