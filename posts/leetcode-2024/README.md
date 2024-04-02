@@ -56,13 +56,46 @@ var search = function (nums, target) {
 
 ::: info 相关题目推荐
 
-- [35. 搜索插入位置](https://leetcode.cn/problems/search-insert-position/description/)
-
 - [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description/)
 
 - [69. x 的平方根 ](https://leetcode.cn/problems/sqrtx/description/)
 
-- [367. 有效的完全平方数](https://leetcode.cn/problems/valid-perfect-square/description/)
-  :::
+:::
 
 ### 移除元素
+
+[27. 移除元素](https://leetcode.cn/problems/remove-element/description/)
+:::details 思路
+双指针法（快慢指针法）： 通过一个快指针和慢指针在一个 for 循环下完成两个 for 循环的工作。
+
+定义快慢指针
+
+快指针：寻找新数组的元素 ，新数组就是不含有目标元素的数组
+慢指针：指向更新 新数组下标的位置
+![](https://code-thinking.cdn.bcebos.com/gifs/27.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95.gif)
+:::
+
+```js
+var removeElement = function (nums, val) {
+  let i = (j = 0);
+  while (j < nums.length) {
+    if (nums[j] !== val) {
+      nums[i++] = nums[j];
+    }
+    j++;
+  }
+  return i;
+};
+```
+
+- 时间复杂度：O(n)
+- 空间复杂度：O(1)
+
+::: info 相关题目推荐
+
+- [283. 移动零](https://leetcode.cn/problems/move-zeroes/description/)
+
+- [844. 比较含退格的字符串](https://leetcode.cn/problems/backspace-string-compare/description/)
+
+- [977. 有序数组的平方](https://leetcode.cn/problems/squares-of-a-sorted-array/description/)
+  :::

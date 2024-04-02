@@ -17,7 +17,9 @@
   <h4 class="font-semibold self-start" >Frameworks:</h4>
   <div class="flex self-start items-start justify-start flex-wrap">
     <img class="px-1 py-1" src="https://img.shields.io/badge/Vue-42b883?logo=vue.js&logoColor=fff"/>
-    <img class="px-1 py-1" src="https://img.shields.io/badge/Nuxt-333?logo=nuxt.js&logoColor=00dc82"/>
+    <!--
+      <img class="px-1 py-1" src="https://img.shields.io/badge/Nuxt-333?logo=nuxt.js&logoColor=00dc82"/>
+    -->
     <img class="px-1 py-1" src="https://img.shields.io/badge/React-087ea4?logo=react&logoColor=fff"/>
     <img class="px-1 py-1" src="https://img.shields.io/badge/Sass-CC6699?logo=Sass&logoColor=fff"/>
     <img class="px-1 py-1" src="https://img.shields.io/badge/TailwindCSS-0ea5e9?logo=tailwindcss&logoColor=fff"/>
