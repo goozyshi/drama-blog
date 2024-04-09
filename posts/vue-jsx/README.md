@@ -6,7 +6,6 @@ tags:
 spot: 巷寓
 location: 深圳，海滨社区
 outline: deep
-draft: true
 ---
 
 # Vue 中 JSX 写法
