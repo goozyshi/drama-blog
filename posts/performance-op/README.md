@@ -6,6 +6,7 @@ tags:
 spot: 碧海新苑
 location: 深圳, 碧海湾
 outline: deep
+draft: true
 ---
 
 # 前端性能优化
