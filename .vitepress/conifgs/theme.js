@@ -84,7 +84,7 @@ export default {
   // Extended configs
   avatar: withBaseURL("/avatar.png"),
   nickname: "Drama",
-  bio: "哇 好多人呀",
+  bio: "",
   location: "Shenzhen, China",
   timezone: "Asia/Beijing",
   pageSize: 10,
