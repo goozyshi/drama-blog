@@ -55,7 +55,7 @@ outline: deep
 
 ## 🎉一些优化
 
-### 性能监控-英语
+### 性能监控
 
 - CPU 监控：[AMD POWER GADGET App](https://github.com/trulyspinach/SMCAMDProcessor) ⚠️ 需要**搭配 SMCAMDProcessor.kext** 使用
 - 显示器亮度调节 🔅：[MonitorControl App](https://github.com/MonitorControl/MonitorControl)
