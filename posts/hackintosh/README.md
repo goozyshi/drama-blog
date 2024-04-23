@@ -74,13 +74,13 @@ outline: deep
 - CPU 监控：[AMD POWER GADGET App](https://github.com/trulyspinach/SMCAMDProcessor) ⚠️ 需要**搭配 SMCAMDProcessor.kext** 使用
 - 显示器亮度调节 🔅：[MonitorControl App](https://github.com/MonitorControl/MonitorControl)
 
-![](./static/amd-power-gadget.png)
+![](./amd-power-gadget.png)
 
 ###   RX6600 显卡仿冒
 
 获取**Device Path**:
 
-![](./static/pcie.png)
+![](./pcie.png)
 
 ```xml
 <key>这里写你显卡的实际的设备路径(Hackintool PCIE里面可以看到)</key>
@@ -110,7 +110,7 @@ outline: deep
 
 在 OpenCore Configurator 应该是这样的：
 
-![](./static/pcie-occ.png)
+![](./pcie-occ.png)
 
 ## 致谢
 
