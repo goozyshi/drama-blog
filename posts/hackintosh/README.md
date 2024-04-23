@@ -116,3 +116,4 @@ outline: deep
 
 - 镜像来源：[黑果小兵的部落阁](https://blog.daliansky.net/macOS-Monterey-12.5.1-21G83-Release-version-with-OC-0.8.4-CLOVER-5148-and-FirPE-original-image.html)
 - 教程入门：[国光的黑苹果安装教程：手把手教你配置 OpenCore](https://github.com/sqlsec/Hackintosh/tree/main)
+- 双系统设置：[Hackintool 黑苹果教程合集](https://hackintool.vercel.app/%E5%9F%BA%E7%A1%80%E7%AF%87/%E5%8F%8C%E7%B3%BB%E7%BB%9F.html)
