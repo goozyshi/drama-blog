@@ -426,7 +426,7 @@ div {
 
 ## 居中布局
 
-![](./center.jpg)
+![](./center.png)
 
 <figure>
   <figcaption> 总结 </figcaption>

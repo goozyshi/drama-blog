@@ -74,3 +74,10 @@ Enhanced Markdown
 ```sh
 $ pnpm i -D markdown-it-footnote markdown-it-image-figures markdown-it-mathjax3
 ```
+
+## 图片统一优化
+
+
+```sh
+sips -Z 1080 *.png
+```

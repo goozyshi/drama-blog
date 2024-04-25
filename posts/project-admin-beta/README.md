@@ -15,7 +15,7 @@ outline: deep
 
 ## 效果预览
 
-![](./nav-preview.png)
+![](./nav-preview.gif)
 
 <figure>
   <figcaption>

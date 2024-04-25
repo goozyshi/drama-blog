@@ -15,7 +15,7 @@ outline: deep
 
 ## 效果预览
 
-![](./nav-preview.png)
+![](./nav-preview.gif)
 
 <figure>
   <figcaption>
@@ -284,7 +284,7 @@ export default menu;
 
 ### 1. 设置默认展开后，激活路由不展开其他菜单
 
-![](./bug1.png)
+![](./bug1.gif)
 
 <figure>
   <figcaption>
