@@ -42,6 +42,9 @@ outline: deep
 -  USB ports
 -  HDMI video & audio output.
 -  iCloud & App Store & iMessage
+-  支持 HEVC 解码 
+
+![](./videoproc.png)
 
 ## ❌ 问题
 
