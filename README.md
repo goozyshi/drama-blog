@@ -1,8 +1,6 @@
 # Drama Blog
 
-## Description
-
-## Getting Started
+VitePress + Tailwind CSS 实现的 个人博客
 
 ### Initial
 
@@ -77,7 +75,24 @@ $ pnpm i -D markdown-it-footnote markdown-it-image-figures markdown-it-mathjax3
 
 ## 图片统一优化
 
-
 ```sh
 sips -Z 1080 *.png
 ```
+
+## 部署后刷新页面 404 的问题
+由于启动了 cleanUrls: true, 这个会让 /posts/a.html 变成 /posts/a ,路径更加简洁，单服务端也需要做出适配。
+
+- ✅ **Vercel**
+新增 vercel.json 
+```js
+{
+  "cleanUrls": true
+}
+```
+- **Ngix 配置**
+```js
+ location /posts/ {
+  try_files  $uri $uri.html
+ }
+```
+即找不到路径就在路径后加html试试
