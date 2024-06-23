@@ -1,8 +1,9 @@
 ---
 title: About
 description: About Me
-layout: page
+pageClass: doc-page
 ---
+# 作品集
 
 <ClientOnly>
   <About />

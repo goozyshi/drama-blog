@@ -23,26 +23,26 @@ export default {
   },
   nav: [
     {
-      text: "TIMELINE",
+      text: "时序",
       link: "/posts",
     },
     {
-      text: "ARCHIVES",
+      text: "归档",
       link: "/archives",
     },
     {
-      text: "TAGS",
+      text: "标签",
       link: "/tags",
     },
     {
-      text: "GUIDE",
+      text: "导航",
       link: "/guide",
     },
     {
-      text: "MORE",
+      text: "作品",
       items: [
         {
-          text: "ABOUT",
+          text: "更多",
           link: "/about",
         },
         {
