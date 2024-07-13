@@ -372,7 +372,7 @@ Postcss 针对修改的 CSS，也就是初始页面效果，通过 JS 动态控�
 
 下方官方提供的在线转换编辑器：
 
-暂时无法在飞书文档外展示此内容
+[postcss-rtlcss 在线转换编辑器](https://elchininet.github.io/postcss-rtlcss/)
 
 #### （必看！）SCSS / LESS 下的问题
 
