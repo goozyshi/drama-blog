@@ -8,13 +8,13 @@ location: 深圳，软件产业基地
 outline: deep
 ---
 
-# 设计模式
+# 设计模式精解
 
 ## 创建型模式
 
 ### 工厂模式
 
-工厂模式的核心思想是**将对象的创建过程封装起来**。
+工厂模式的精髓在于**封装对象的创建过程**。
 
 #### 简单工厂模式
 
@@ -146,7 +146,7 @@ class VivoFactory extends MobilePhoneFactory {
 }
 ```
 
-### 单例模式
+### 单例模式：确保唯一实例
 
 如何确保一个类只有一个实例？这需要构造函数**具备判断自己是否已经创建过一个实例的能力**。
 
@@ -201,6 +201,75 @@ export function install(_Vue) {
 
 如果没有使用单例模式，多次 Vue.use(Vuex) 反复注入 Store，就会重复覆盖之前的实例，导致数据丢失。
 
-## 行为型模式
+#### 设计一个单例 Storage, setItem(key, value) getItem(key)
 
-### 析构器模式
+```js
+class Storage {
+  static getInstance() {
+    if (!Storage.instance) {
+      Storage.instance = new Storage();
+    }
+    return Storage.instance;
+  }
+  setItem(key, value) {
+    // 借用 localStorage
+    localStorage.setItem(key, value);
+  }
+  getItem(key) {
+    return localStorage.getItem(key);
+  }
+}
+```
+
+### 原型模式：利用实例共享数据和方法
+
+JavaScript 中，我们使用原型模式，并不是为了得到一个副本，而是为了得到与构造函数（类）相对应的类型的实例、实现数据/方法的共享。
+
+原型编程范式的核心思想就是**利用实例来描述对象，用实例作为定义对象和继承的基础**。在 JavaScript 中，原型编程范式的体现就是**基于原型链的继承**。
+
+#### 深拷贝的实现
+
+需要考虑两个问题： 栈爆 + 循环引用。
+
+[深拷贝的终极实现](https://segmentfault.com/a/1190000016672263)
+
+```js
+/**
+ * 以下代码可以生成不同深度、广度的数据
+ * createData(1, 2); 1层深度，每层有3个数据 {data: {0: 0, 1: 1,}}
+ * createData(2, 0);  3层深度，每层有0个数据 {data: {data: {}}}
+ */
+function createData(deep, breadth) {
+  let data = {};
+  let temp = data;
+
+  for (let i = 0; i < deep; i++) {
+    temp = temp["data"] = {};
+    for (let j = 0; j < breadth; j++) {
+      temp[j] = j;
+    }
+  }
+  return data;
+}
+// 递归实现 ==> 栈爆
+function deepCopy(target, wm = new WeakMap()) {
+  if (typeof target !== "object" || target === null) return target;
+  let res = Array.isArray(target) ? [] : {};
+  if (wm.get(target)) return wm.get(target);
+  wm.set(target, res);
+  for (let key in target) {
+    if (target.hasOwnProperty(key)) {
+      res[key] = deepCopy(target[key], wm);
+    }
+  }
+  return res;
+}
+
+const x = deepCopy(createData(10));
+const y = deepCopy(createData(1000)); // ok
+const z = deepCopy(createData(10000)); // Maximum call stack size exceeded
+```
+
+## 结构型模式
+
+## 行为型模式
