@@ -6,8 +6,8 @@ tags:
   - Facebook
   - Twitter
   - Safari
-spot: 巷寓
-location: 深圳，海滨社区
+spot: 云海路
+location: 深圳南山，软件产业基地
 outline: deep
 ---
 
