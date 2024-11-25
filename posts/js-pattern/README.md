@@ -6,6 +6,7 @@ tags:
 spot: 云海路
 location: 深圳，软件产业基地
 outline: deep
+draft: true
 ---
 
 # 设计模式精解
@@ -271,5 +272,14 @@ const z = deepCopy(createData(10000)); // Maximum call stack size exceeded
 ```
 
 ## 结构型模式
+
+### 装饰器模式
+
+TODO:
+Object.definePrototype / Proxy + React HOC
+
+第三方库：https://github.com/jayphelps/core-decorators
+
+装饰器模式用于类以及类方法，由于存在**函数提升，不适用于函数**，如果非要装饰函数，可以使用高阶函数。
 
 ## 行为型模式
