@@ -6,150 +6,152 @@ tags:
 spot: 云海路
 location: 深圳，软件产业基地
 outline: deep
-draft: true
+draft: false
 ---
 
 # 设计模式精解
 
 ## 创建型模式
 
-### 工厂模式
+### 创建型-简单工厂模式
 
-工厂模式的精髓在于**封装对象的创建过程**。
+#### 优点
 
-#### 简单工厂模式
+1. 封装了对象创建过程，客户端无需关心对象的创建细节。
+2. 提高代码的可维护性和可读性。
+3. 通过传递参数来创建不同的对象，灵活性高。
 
-设想一个系统需要根据不同的职业为用户分配特定的职责说明，即给每个职业的用户添加一个描述其工作内容的个性化字段。
+#### 缺点
+
+1. 工厂类集中了所有对象的创建逻辑，职责过重，违反单一职责原则。
+2. 增加新的产品时需要修改工厂类，不符合开放封闭原则。
+
+#### 使用场景
+
+1. 需要创建多个相似对象时，可以使用简单工厂模式。
+2. 客户端不需要关心对象的创建过程，只需传递参数即可获得对象。
+
+#### 代码示例
 
 ```javascript
-function User(name, age, career, work) {
+function User(name, age, role, responsibilities) {
   this.name = name;
   this.age = age;
-  this.career = career;
-  this.work = work;
+  this.role = role;
+  this.responsibilities = responsibilities;
 }
 
-function Factory(name, age, career) {
-  let work;
-  switch (career) {
-    case "programmer":
-      work = "编程";
+function UserFactory(name, age, role) {
+  let responsibilities;
+  switch (role) {
+    case "developer":
+      responsibilities = ["写代码", "修Bug"];
       break;
     case "designer":
-      work = "设计";
+      responsibilities = ["设计界面", "制作原型"];
       break;
     case "manager":
-      work = "管理";
+      responsibilities = ["管理团队", "制定计划"];
       break;
-    // ...
+    // ...existing code...
   }
-  return new User(name, age, career, work);
+  return new User(name, age, role, responsibilities);
 }
+
+const user1 = UserFactory("张三", 28, "developer");
+const user2 = UserFactory("李四", 32, "designer");
+console.log(user1);
+console.log(user2);
 ```
 
-#### 抽象工厂模式
+### 创建型-抽象工厂模式
 
-上述工厂函数存在的问题是，每当增加新的职业时，都需要修改 Factory 函数的代码，这会导致 Factory 函数变得**越来越庞大**，最终变得难以维护，每次修改都可能引入新的错误。
+#### 优点
 
-为了解决这个问题，我们可以通过抽象工厂模式来优化。以智能手机的生产为例，一部智能手机的基本组成包括操作系统（OS）和硬件（Hardware）。如果我们要开设一个手机工厂，那么这个工厂必须同时准备好操作系统和硬件才能实现手机的**大规模生产**。考虑到操作系统和硬件背后可能有不同的供应商，而我们目前并不清楚下一个生产线具体要生产什么样的手机，只知道手机必须由这两部分组成，因此我们可以定义一个抽象类来**规定手机的基本组成**：
+1. 分离具体类的生成过程，符合开放封闭原则。
+2. 提供创建一系列相关或依赖对象的接口，无需指定具体类。
+3. 易于扩展，增加新的产品族时无需修改现有代码。
+
+#### 缺点
+
+1. 增加系统的抽象性和复杂性。
+2. 增加了代码量，理解和维护成本较高。
+
+#### 使用场景
+
+1. 需要创建一系列相关或依赖对象的场景，例如跨平台应用的界面创建。
+2. 需要提供一个产品族的多个对象时，例如不同品牌的手机、电脑等。
+
+#### 代码示例
 
 ```javascript
-class MobilePhoneFactory {
+// 抽象工厂类
+class DeviceFactory {
   createOS() {
-    throw new Error("createOS 抽象方法必须被实现");
+    throw new Error("抽象工厂方法不允许直接调用，你需要将我重写！");
   }
   createHardware() {
-    throw new Error("createHardware 抽象方法必须被实现");
+    throw new Error("抽象工厂方法不允许直接调用，你需要将我重写！");
   }
 }
 
-class OPhone extends MobilePhoneFactory {
+// 具体工厂类
+class AppleFactory extends DeviceFactory {
   createOS() {
-    // 安卓系统
-    return new AndroidOS();
+    return new iOS();
   }
   createHardware() {
-    // 高通硬件
-    return new QualcommHardware();
+    return new AppleHardware();
   }
 }
-```
 
-定义操作系统的抽象类：
-
-```javascript
+// 抽象产品类
 class OS {
-  handleHardware() {
-    throw new Error("handleHardware 抽象方法必须被实现");
+  controlHardware() {
+    throw new Error("抽象产品方法不允许直接调用，你需要将我重写！");
   }
 }
 
-class AndroidOS extends OS {
-  handleHardware() {
-    console.log("安卓处理硬件");
+// 具体产品类
+class iOS extends OS {
+  controlHardware() {
+    console.log("我会用iOS的方式去操作硬件");
   }
 }
 
-class AppleOS extends OS {
-  handleHardware() {
-    console.log("🍎处理硬件");
-  }
-}
-```
-
-定义硬件的抽象类：
-
-```javascript
-class Hardware {
+class AppleHardware {
   operateByOrder() {
-    throw new Error("operateByOrder 抽象方法必须被实现");
+    console.log("我会用苹果的方式去运转");
   }
 }
 
-class QualcommHardware extends Hardware {
-  operateByOrder() {
-    console.log("高通处理器");
-  }
-}
-
-class MediaTekHardware extends Hardware {
-  operateByOrder() {
-    console.log("联发科处理器");
-  }
-}
+// 使用抽象工厂模式创建对象
+const myDevice = new AppleFactory();
+const myOS = myDevice.createOS();
+const myHardware = myDevice.createHardware();
+myOS.controlHardware(); // 输出"我会用iOS的方式去操作硬件"
+myHardware.operateByOrder(); // 输出"我会用苹果的方式去运转"
 ```
 
-生产过程：
+### 创建型-单例模式：确保唯一实例
 
-```javascript
-// 这是我的手机
-const myPhone = new OPhone();
-// 让它拥有操作系统
-const myOS = myPhone.createOS();
-// 让它拥有硬件
-const myHardware = myPhone.createHardware();
-// 启动操作系统（输出‘高通处理器’）
-myOS.handleHardware();
-// 唤醒硬件（输出‘安卓处理硬件’）
-myHardware.operateByOrder();
-```
+#### 优点
 
-当你想要更换手机品牌时，不需要修改`MobilePhoneFactory`，只需扩展新的工厂类，例如`VivoFactory`：
+1. 确保一个类只有一个实例，节省内存开销。
+2. 提供全局访问点，方便访问和管理实例。
+3. 可以延迟实例化，只有在需要时才创建实例。
 
-```javascript
-class VivoFactory extends MobilePhoneFactory {
-  createOS() {
-    // 操作系统实现代码
-  }
-  createHardware() {
-    // 硬件实现代码
-  }
-}
-```
+#### 缺点
 
-### 单例模式：确保唯一实例
+1. 单例模式可能会导致类的职责过重，难以维护。
+2. 不利于扩展，单例类的修改可能会影响全局。
 
-如何确保一个类只有一个实例？这需要构造函数**具备判断自己是否已经创建过一个实例的能力**。
+#### 使用场景
+
+1. 需要确保某个类只有一个实例时，例如数据库连接池、线程池等。
+2. 需要提供全局访问点的场景，例如全局配置管理、日志记录器等。
+
+#### 代码示例
 
 ```javascript
 class Singleton {
@@ -202,31 +204,106 @@ export function install(_Vue) {
 
 如果没有使用单例模式，多次 Vue.use(Vuex) 反复注入 Store，就会重复覆盖之前的实例，导致数据丢失。
 
-#### 设计一个单例 Storage, setItem(key, value) getItem(key)
+#### 设计一个单例模式弹框
 
-```js
-class Storage {
-  static getInstance() {
-    if (!Storage.instance) {
-      Storage.instance = new Storage();
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>单例模式弹框</title>
+  </head>
+  <style>
+    #modal {
+      height: 200px;
+      width: 200px;
+      line-height: 200px;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid black;
+      text-align: center;
     }
-    return Storage.instance;
-  }
-  setItem(key, value) {
-    // 借用 localStorage
-    localStorage.setItem(key, value);
-  }
-  getItem(key) {
-    return localStorage.getItem(key);
-  }
-}
+  </style>
+  <body>
+    <button id="open">打开弹框</button>
+    <button id="close">关闭弹框</button>
+  </body>
+  <script>
+    // 核心逻辑，这里采用了闭包思路来实现单例模式
+    const Modal = (function () {
+      let modal = null;
+      return function () {
+        if (!modal) {
+          modal = document.createElement("div");
+          modal.innerHTML = "我是一个全局唯一的Modal";
+          modal.id = "modal";
+          modal.style.display = "none";
+          document.body.appendChild(modal);
+        }
+        return modal;
+      };
+    })();
+
+    // 点击打开按钮展示模态框
+    document.getElementById("open").addEventListener("click", function () {
+      // 未点击则不创建modal实例，避免不必要的内存占用;此处不用 new Modal 的形式调用也可以，和 Storage 同理
+      const modal = new Modal();
+      modal.style.display = "block";
+    });
+
+    // 点击关闭按钮隐藏模态框
+    document.getElementById("close").addEventListener("click", function () {
+      const modal = new Modal();
+      if (modal) {
+        modal.style.display = "none";
+      }
+    });
+  </script>
+</html>
 ```
 
-### 原型模式：利用实例共享数据和方法
+### 创建型-原型模式
 
-JavaScript 中，我们使用原型模式，并不是为了得到一个副本，而是为了得到与构造函数（类）相对应的类型的实例、实现数据/方法的共享。
+#### 优点
 
-原型编程范式的核心思想就是**利用实例来描述对象，用实例作为定义对象和继承的基础**。在 JavaScript 中，原型编程范式的体现就是**基于原型链的继承**。
+1. 可以克隆对象，避免重复创建相同对象，节省内存。
+2. 通过原型链实现对象的继承，方法和属性可以共享，节省资源。
+3. 动态添加或修改对象的属性和方法，灵活性高。
+
+#### 缺点
+
+1. 需要对原型链有深入理解，使用不当可能导致难以调试和维护。
+2. 不能克隆不可枚举的属性和方法。
+
+#### 使用场景
+
+1. 当需要创建多个相似对象时，可以使用原型模式来克隆对象。
+2. 当需要动态添加或修改对象的属性和方法时，可以使用原型模式。
+
+#### 代码示例
+
+```javascript
+// 创建一个Person构造函数
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.greet = function () {
+  console.log(`Hello, my name is ${this.name}`);
+};
+
+// 使用Person构造函数创建person实例
+const person1 = new Person("Alice", 30);
+const person2 = Object.create(Person.prototype);
+person2.name = "Bob";
+person2.age = 25;
+
+person1.greet(); // 输出"Hello, my name is Alice"
+person2.greet(); // 输出"Hello, my name is Bob"
+```
 
 #### 深拷贝的实现
 
