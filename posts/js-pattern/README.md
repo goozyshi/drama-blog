@@ -350,13 +350,141 @@ const z = deepCopy(createData(10000)); // Maximum call stack size exceeded
 
 ## 结构型模式
 
-### 装饰器模式
+## 结构型-装饰器模式
 
-TODO:
-Object.definePrototype / Proxy + React HOC
+### 优点
 
-第三方库：https://github.com/jayphelps/core-decorators
+1. 动态扩展对象功能，不修改原有代码。
+2. 可以多个装饰器组合使用，灵活性高。
 
-装饰器模式用于类以及类方法，由于存在**函数提升，不适用于函数**，如果非要装饰函数，可以使用高阶函数。
+### 缺点
+
+1. 可能会增加代码复杂度，难以理解。
+2. 多层装饰器嵌套可能导致调试困难。
+
+### 使用场景
+
+1. 需要动态添加功能的对象。
+
+- Object.definePrototype / Proxy + React HOC
+- 第三方库：https://github.com/jayphelps/core-decorators
+- 装饰器模式用于类以及类方法，由于存在**函数提升，不适用于函数**，如果非要装饰函数，可以使用高阶函数。
+
+2. 不希望修改原有代码的情况下扩展功能。
+
+### 代码示例
+
+```javascript
+// 装饰器函数
+function logExecution(target, name, descriptor) {
+  const originalMethod = descriptor.value;
+  descriptor.value = function (...args) {
+    console.log(`Executing ${name} with arguments: ${args}`);
+    return originalMethod.apply(this, args);
+  };
+  return descriptor;
+}
+
+class Example {
+  // ES7
+  @logExecution
+  run(param) {
+    console.log(`Running with ${param}`);
+  }
+}
+
+const example = new Example();
+example.run("test");
+```
+
+## 结构型-适配器模式
+
+### 优点
+
+1. 可以让不兼容的接口协同工作。
+2. 提高了类的复用性。
+
+### 缺点
+
+1. 增加了系统复杂度。
+2. 可能会影响性能。
+
+### 使用场景
+
+1. 需要兼容不同接口的类。
+2. 需要复用现有类而不修改其代码。
+
+TODO: axios adapter: https://github.com/axios/axios/tree/main/lib/adapters
+
+### 代码示例
+
+```javascript
+// 旧接口
+function OldInterface() {
+  this.request = function () {
+    return "Old Interface";
+  };
+}
+
+// 新接口
+function NewInterface() {
+  this.specificRequest = function () {
+    return "New Interface";
+  };
+}
+
+// 适配器
+function Adapter(oldInterface) {
+  this.specificRequest = function () {
+    return oldInterface.request();
+  };
+}
+
+const oldInterface = new OldInterface();
+const adapter = new Adapter(oldInterface);
+
+console.log(adapter.specificRequest()); // Old Interface
+```
+
+## 代理模式总结
+
+### 优点
+
+1. 控制对象访问，增加安全性。
+2. 可以在不修改对象的情况下增加功能。
+
+### 缺点
+
+1. 增加了系统复杂度。
+2. 可能会影响性能。
+
+### 使用场景
+
+1. 需要控制对对象的访问。
+2. 需要在访问对象时增加额外功能。
+
+### 代码示例
+
+```javascript
+// 代理对象
+const handler = {
+  get: function (target, prop) {
+    if (prop === "secret") {
+      return "Access Denied";
+    }
+    return target[prop];
+  },
+};
+
+const target = {
+  name: "John",
+  secret: "Hidden",
+};
+
+const proxy = new Proxy(target, handler);
+
+console.log(proxy.name); // John
+console.log(proxy.secret); // Access Denied
+```
 
 ## 行为型模式
