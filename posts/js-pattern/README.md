@@ -6,10 +6,9 @@ tags:
 spot: 云海路
 location: 深圳，软件产业基地
 outline: deep
-draft: false
 ---
 
-# 设计模式
+# 前端常见的设计模式
 
 ## 创建型模式
 
@@ -366,40 +365,44 @@ const z = deepCopy(createData(10000)); // Maximum call stack size exceeded
 
 1. 需要动态添加功能的对象。
 
-- Object.definePrototype / Proxy + React HOC
-- 第三方库：https://github.com/jayphelps/core-decorators
-- 装饰器模式用于类以及类方法，由于存在**函数提升，不适用于函数**，如果非要装饰函数，可以使用高阶函数。
-
 2. 不希望修改原有代码的情况下扩展功能。
 
 #### 相关案例
 
 - HOC 高阶组件
+- Objec.defineProperty
 - [装饰模式库-https://github.com/jayphelps/core-decorators](https://github.com/jayphelps/core-decorators)
+- 装饰器模式用于类以及类方法，由于存在**函数提升，不适用于函数**，如果非要装饰函数，可以使用高阶函数。
 
 #### 代码示例
 
 ```javascript
-// 装饰器函数
-function logExecution(target, name, descriptor) {
-  const originalMethod = descriptor.value;
-  descriptor.value = function (...args) {
-    console.log(`Executing ${name} with arguments: ${args}`);
-    return originalMethod.apply(this, args);
-  };
+import { readonly } from "core-decorators";
+
+class Meal {
+  // ES7 写法
+  @readonly
+  entree = "steak";
+}
+
+var dinner = new Meal();
+dinner.entree = "salmon";
+// Cannot assign to read only property 'entree' of [object Object]
+```
+
+源码实现
+
+```javascript
+import { decorate } from "./private/utils";
+
+function handleDescriptor(target, key, descriptor) {
+  descriptor.writable = false;
   return descriptor;
 }
 
-class Example {
-  // ES7
-  @logExecution
-  run(param) {
-    console.log(`Running with ${param}`);
-  }
+export default function readonly(...args) {
+  return decorate(handleDescriptor, args);
 }
-
-const example = new Example();
-example.run("test");
 ```
 
 ### 结构型-适配器模式
@@ -419,36 +422,75 @@ example.run("test");
 1. 需要兼容不同接口的类。
 2. 需要复用现有类而不修改其代码。
 
-TODO: axios adapter: https://github.com/axios/axios/tree/main/lib/adapters
+#### 相关案例
+
+- axios adapter: https://github.com/axios/axios/tree/main/lib/adapters
 
 #### 代码示例
 
+axios 在 Node 环境和浏览器环境下都可以调用相同的 api，得益于其使用适配器磨平两者差异。
+
+在 [axios 的核心逻辑](https://github.com/axios/axios/blob/master/lib/core/Axios.js)中，可以注意到实际上派发请求的是 [dispatchRequest 方法](https://github.com/axios/axios/blob/master/lib/core/dispatchRequest.js)。该方法内部其实主要做了两件事：
+
+1.  数据转换，转换请求体/响应体。适配数据格式
+2.  调用适配器。
+
 ```javascript
-// 旧接口
-function OldInterface() {
-  this.request = function () {
-    return "Old Interface";
-  };
+var adapter = config.adapter || defaults.adapter;
+
+return adapter(config).then(
+  function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // 响应体转换
+    response.data = transformData.call(
+      config,
+      response.data,
+      response.headers,
+      response.status,
+      config.transformResponse
+    );
+
+    return response;
+  },
+  function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData.call(
+          config,
+          reason.response.data,
+          reason.response.headers,
+          reason.response.status,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  }
+);
+```
+
+默认适配器
+
+```javascript
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== "undefined") {
+    // For browsers use XHR adapter
+    adapter = require("../adapters/xhr");
+  } else if (
+    typeof process !== "undefined" &&
+    Object.prototype.toString.call(process) === "[object process]"
+  ) {
+    // For node use HTTP adapter
+    adapter = require("../adapters/http");
+  }
+  return adapter;
 }
-
-// 新接口
-function NewInterface() {
-  this.specificRequest = function () {
-    return "New Interface";
-  };
-}
-
-// 适配器
-function Adapter(oldInterface) {
-  this.specificRequest = function () {
-    return oldInterface.request();
-  };
-}
-
-const oldInterface = new OldInterface();
-const adapter = new Adapter(oldInterface);
-
-console.log(adapter.specificRequest()); // Old Interface
 ```
 
 ### 结构型-代理模式
@@ -475,7 +517,7 @@ console.log(adapter.specificRequest()); // Old Interface
 const handler = {
   get: function (target, prop) {
     if (prop === "secret") {
-      return "Access Denied";
+      return "Vip 可见";
     }
     return target[prop];
   },
@@ -483,13 +525,74 @@ const handler = {
 
 const target = {
   name: "John",
-  secret: "Hidden",
+  age: "18",
 };
 
 const proxy = new Proxy(target, handler);
 
 console.log(proxy.name); // John
-console.log(proxy.secret); // Access Denied
+console.log(proxy.secret); // Vip 可见
+```
+
+图片懒加载
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>虚拟代理示例</title>
+  </head>
+  <body>
+    <img id="image" alt="Image" />
+    <script>
+      class PreLoadImage {
+        constructor(imgNode) {
+          this.imgNode = imgNode;
+        }
+        // 该方法用于设置真实的图片地址
+        setSrc(targetUrl) {
+          this.imgNode.src = targetUrl;
+        }
+      }
+
+      class ProxyImage {
+        // 占位图的url地址
+        static LOADING_URL = "https://fakeimg.pl/200x100";
+
+        constructor(targetImage) {
+          // 目标Image，即PreLoadImage实例
+          this.targetImage = targetImage;
+        }
+
+        // 该方法主要操作虚拟Image，完成加载
+        setSrc(targetUrl) {
+          // 真实img节点初始化时展示的是一个占位图
+          this.targetImage.setSrc(ProxyImage.LOADING_URL);
+          const virtualImage = new Image();
+          // 图片加载完成DOM上src属性设置为目标图片的url
+          virtualImage.onload = () => {
+            this.targetImage.setSrc(targetUrl);
+          };
+          virtualImage.src = targetUrl;
+        }
+      }
+    </script>
+    <script>
+      // 获取img节点
+      const imgNode = document.getElementById("image");
+      // 创建PreLoadImage实例
+      const preLoadImage = new PreLoadImage(imgNode);
+      // 创建ProxyImage实例
+      const proxyImage = new ProxyImage(preLoadImage);
+      // 设置真实图片的URL
+      const realImageUrl = "https://placebear.com/200/100";
+      // 使用代理设置图片的src
+      proxyImage.setSrc(realImageUrl);
+    </script>
+  </body>
+</html>
 ```
 
 ## 行为型模式
