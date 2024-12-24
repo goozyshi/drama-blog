@@ -510,6 +510,10 @@ function getDefaultAdapter() {
 1. 需要控制对对象的访问。
 2. 需要在访问对象时增加额外功能。
 
+#### 相关案例
+
+- ES6 Proxy
+
 #### 代码示例
 
 ```javascript
