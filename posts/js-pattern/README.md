@@ -601,6 +601,249 @@ console.log(proxy.secret); // Vip 可见
 
 ## 行为型模式
 
+### 行为型-策略模式
+
+#### 优点
+
+1. 策略模式提供了管理相关的算法族的办法。
+2. 策略模式提供了可以替换继承关系的办法。
+3. 使用策略模式可以避免使用多重条件（if-else）语句。
+
+#### 缺点
+
+1. 客户端必须知道所有的策略类，并自行决定使用哪一个策略类。
+2. 策略模式会增加系统类和对象的个数。
+
+#### 使用场景
+
+1. 当一个系统需要动态地在几种算法中选择一种时。
+2. 当一个类定义了多种行为，并且这些行为在这个类的操作中以多个条件语句的形式出现时。
+
+#### 代码示例
+
+```javascript
+// 定义策略类
+class Strategy {
+  execute(a, b) {
+    throw new Error("This method should be overridden!");
+  }
+}
+
+// 定义具体策略类
+class ConcreteStrategyAdd extends Strategy {
+  execute(a, b) {
+    return a + b;
+  }
+}
+
+class ConcreteStrategySubtract extends Strategy {
+  execute(a, b) {
+    return a - b;
+  }
+}
+
+class ConcreteStrategyMultiply extends Strategy {
+  execute(a, b) {
+    return a * b;
+  }
+}
+
+// 定义上下文类
+class Context {
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+
+  setStrategy(strategy) {
+    this.strategy = strategy;
+  }
+
+  executeStrategy(a, b) {
+    return this.strategy.execute(a, b);
+  }
+}
+
+// 使用策略模式
+const context = new Context(new ConcreteStrategyAdd());
+console.log(context.executeStrategy(5, 3)); // 输出 8
+
+context.setStrategy(new ConcreteStrategySubtract());
+console.log(context.executeStrategy(5, 3)); // 输出 2
+
+context.setStrategy(new ConcreteStrategyMultiply());
+console.log(context.executeStrategy(5, 3)); // 输出 15
+```
+
+### 行为型-状态模式
+
+#### 优点
+
+1. 将与特定状态相关的行为局部化，并且将不同状态的行为分割开来。
+2. 使得状态转换显得更加清晰。
+3. 符合开闭原则，增加新的状态时无需修改原有代码。
+
+#### 缺点
+
+1. 增加了系统的复杂性，需要定义多个状态类。
+2. 状态模式的使用必然会增加系统类和对象的个数。
+
+#### 使用场景
+
+1. 当一个对象的行为取决于它的状态，并且它必须在运行时根据状态改变其行为时。
+2. 当一个操作中含有庞大的分支结构，并且这些分支决定于对象的状态时。
+
+#### 代码示例
+
+```javascript
+// 定义状态类
+class State {
+  handle(context) {
+    throw new Error("This method should be overridden!");
+  }
+}
+
+// 定义具体状态类
+class ConcreteStateA extends State {
+  handle(context) {
+    console.log("State A handling request.");
+    context.setState(new ConcreteStateB());
+  }
+}
+
+class ConcreteStateB extends State {
+  handle(context) {
+    console.log("State B handling request.");
+    context.setState(new ConcreteStateA());
+  }
+}
+
+// 定义上下文类
+class Context {
+  constructor() {
+    this.state = new ConcreteStateA();
+  }
+
+  setState(state) {
+    this.state = state;
+  }
+
+  request() {
+    this.state.handle(this);
+  }
+}
+
+// 使用状态模式
+const context = new Context();
+context.request(); // 输出 "State A handling request."
+context.request(); // 输出 "State B handling request."
+context.request(); // 输出 "State A handling request."
+```
+
+### 行为型-观察者模式
+
+#### 优点
+
+1. 实现了对象之间的松耦合。
+2. 支持广播通信，通知所有订阅者。
+3. 符合开闭原则，增加新的观察者时无需修改原有代码。
+
+#### 缺点
+
+1. 如果一个被观察者对象有很多直接和间接的观察者，会导致所有的观察者都被通知，可能会导致性能问题。
+2. 如果观察者和被观察者之间存在循环依赖，可能会导致系统崩溃。
+
+#### 使用场景
+
+1. 当一个对象的改变需要通知其他对象时。
+2. 当一个对象需要动态地添加或移除观察者时。
+
+#### 代码示例
+
+```javascript
+// 定义发布者类
+class Publisher {
+  constructor() {
+    this.observers = [];
+  }
+
+  add(observer) {
+    this.observers.push(observer);
+  }
+
+  remove(observer) {
+    this.observers = this.observers.filter((obs) => obs !== observer);
+  }
+
+  notify() {
+    this.observers.forEach((observer) => observer.update());
+  }
+}
+
+// 定义订阅者类
+class Observer {
+  update() {
+    console.log("Observer.update invoked");
+  }
+}
+
+// 创建发布者和订阅者
+const publisher = new Publisher();
+const observer1 = new Observer();
+const observer2 = new Observer();
+
+// 添加订阅者
+publisher.add(observer1);
+publisher.add(observer2);
+
+// 通知订阅者
+publisher.notify();
+```
+
+### 行为型-迭代器模式
+
+#### 优点
+
+1. 提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露该对象的内部表示。
+2. 支持不同的遍历方式。
+3. 简化了聚合类的接口。
+
+#### 缺点
+
+1. 增加了类的数量。
+2. 由于引入了迭代器，遍历的过程可能会变得复杂。
+
+#### 使用场景
+
+1. 需要访问一个聚合对象的内容而无需暴露其内部表示时。
+2. 需要支持多种遍历方式时。
+3. 需要遍历不同的集合对象时。
+
+#### 代码示例
+
+```javascript
+// 定义一个迭代器生成函数
+function createIterator(items) {
+  let i = 0;
+  return {
+    next: function () {
+      const done = i >= items.length;
+      const value = !done ? items[i++] : undefined;
+      return {
+        done: done,
+        value: value,
+      };
+    },
+  };
+}
+
+// 使用迭代器遍历数组
+const iterator = createIterator([1, 2, 3]);
+console.log(iterator.next()); // { done: false, value: 1 }
+console.log(iterator.next()); // { done: false, value: 2 }
+console.log(iterator.next()); // { done: false, value: 3 }
+console.log(iterator.next()); // { done: true, value: undefined }
+```
+
 ## Referance
 
 - [设计模式二三事-美团技术团队](https://tech.meituan.com/2022/03/10/interesting-talk-about-design-patterns.html)
