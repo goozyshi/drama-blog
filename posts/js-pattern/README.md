@@ -605,9 +605,9 @@ console.log(proxy.secret); // Vip 可见
 
 #### 优点
 
-1. 策略模式提供了管理相关的算法族的办法。
-2. 策略模式提供了可以替换继承关系的办法。
-3. 使用策略模式可以避免使用多重条件（if-else）语句。
+1. 提供了算法的封装和复用，避免了多重条件语句的使用。
+2. 可以动态地更改对象的行为，使得代码更加灵活。
+3. 符合开闭原则，增加新的策略时无需修改原有代码。
 
 #### 缺点
 
@@ -695,51 +695,51 @@ console.log(context.executeStrategy(5, 3)); // 输出 15
 #### 代码示例
 
 ```javascript
-// 定义状态类
-class State {
-  handle(context) {
-    throw new Error("This method should be overridden!");
-  }
-}
-
-// 定义具体状态类
-class ConcreteStateA extends State {
-  handle(context) {
-    console.log("State A handling request.");
-    context.setState(new ConcreteStateB());
-  }
-}
-
-class ConcreteStateB extends State {
-  handle(context) {
-    console.log("State B handling request.");
-    context.setState(new ConcreteStateA());
-  }
-}
-
-// 定义上下文类
-class Context {
+class CoffeeMaker {
   constructor() {
-    this.state = new ConcreteStateA();
+    // 初始化状态，没有切换任何咖啡模式
+    this.state = "init";
+    // 初始化牛奶的存储量
+    this.leftMilk = "500ml";
   }
+  stateToProcessor = {
+    that: this,
+    american() {
+      // 尝试在行为函数里拿到咖啡机实例的信息并输出
+      console.log("咖啡机现在的牛奶存储量是:", this.that.leftMilk);
+      console.log("我只吐黑咖啡");
+    },
+    latte() {
+      this.american();
+      console.log("加点奶");
+    },
+    vanillaLatte() {
+      this.latte();
+      console.log("再加香草糖浆");
+    },
+    mocha() {
+      this.latte();
+      console.log("再加巧克力");
+    },
+  };
 
-  setState(state) {
+  // 关注咖啡机状态切换函数
+  changeState(state) {
     this.state = state;
-  }
-
-  request() {
-    this.state.handle(this);
+    if (!this.stateToProcessor[state]) {
+      return;
+    }
+    this.stateToProcessor[state]();
   }
 }
 
-// 使用状态模式
-const context = new Context();
-context.request(); // 输出 "State A handling request."
-context.request(); // 输出 "State B handling request."
-context.request(); // 输出 "State A handling request."
+const mk = new CoffeeMaker();
+mk.changeState("latte");
 ```
 
 ### 行为型-观察者模式
+
+> 观察者模式和发布-订阅模式之间的区别，在于是否存在第三方、发布者能否直接感知订阅者
 
 #### 优点
 
@@ -759,44 +759,88 @@ context.request(); // 输出 "State A handling request."
 
 #### 代码示例
 
+Node 中的 EventEmitter
+
 ```javascript
-// 定义发布者类
-class Publisher {
+class EventEmitter {
+  constructor () {
+    this.emitList = []，
+  }
+  on (type, listener) {
+    this.emitList[type] ? this.emitList[type].push(listener) : (this.emitList = [listener])
+  }
+  off (type) {
+    delete this.emitList[type]
+  }
+  once (type, listener) {
+    this.on(type, () => {
+      listener()
+      this.off(type)
+    })
+  }
+  emit (type, ...args) {
+    this.emitList.forEach(fn => fn(...args))
+  }
+}
+const events = new EventEmitter()
+events.on('click', () => console.log(`click`))
+events.emit('click')
+events.emit('click')
+events.once('once', () => console.log(`once`))
+events.emit('once')
+events.emit('once')
+```
+
+Vue 2 中响应式系统实现
+
+```javascript
+// observe方法遍历并包装对象属性
+function observe(target) {
+  // 若target是一个对象，则遍历它
+  if (target && typeof target === "object") {
+    Object.keys(target).forEach((key) => {
+      // defineReactive方法会给目标属性装上“监听器”
+      defineReactive(target, key, target[key]);
+    });
+  }
+}
+
+// 定义订阅者类Dep
+class Dep {
   constructor() {
-    this.observers = [];
+    // 初始化订阅队列
+    this.subs = [];
   }
 
-  add(observer) {
-    this.observers.push(observer);
+  // 增加订阅者
+  addSub(sub) {
+    this.subs.push(sub);
   }
 
-  remove(observer) {
-    this.observers = this.observers.filter((obs) => obs !== observer);
-  }
-
+  // 通知订阅者（是不是所有的代码都似曾相识？）
   notify() {
-    this.observers.forEach((observer) => observer.update());
+    this.subs.forEach((sub) => {
+      sub.update();
+    });
   }
 }
 
-// 定义订阅者类
-class Observer {
-  update() {
-    console.log("Observer.update invoked");
-  }
+function defineReactive(target, key, val) {
+  const dep = new Dep();
+  // 监听当前属性
+  observe(val);
+  Object.defineProperty(target, key, {
+    enumerable: true, // 可枚举
+    configurable: false, // 不可配置
+    get: function () {
+      return val;
+    },
+    set: (value) => {
+      // 通知所有订阅者
+      dep.notify();
+    },
+  });
 }
-
-// 创建发布者和订阅者
-const publisher = new Publisher();
-const observer1 = new Observer();
-const observer2 = new Observer();
-
-// 添加订阅者
-publisher.add(observer1);
-publisher.add(observer2);
-
-// 通知订阅者
-publisher.notify();
 ```
 
 ### 行为型-迭代器模式
@@ -846,4 +890,5 @@ console.log(iterator.next()); // { done: true, value: undefined }
 
 ## Referance
 
+- [Java 设计模式：23 种设计模式全面解析](https://c.biancheng.net/design_pattern/)
 - [设计模式二三事-美团技术团队](https://tech.meituan.com/2022/03/10/interesting-talk-about-design-patterns.html)
