@@ -1,7 +1,7 @@
-import { defineConfig } from 'vitepress'
-import { BASE_PATH, withBaseURL, gaConfig } from "./conifgs/base"
-import themeConfig from './conifgs/theme'
-import useMDItPlugins from './tools/mdit'
+import { defineConfig } from "vitepress";
+import { BASE_PATH, withBaseURL, gaConfig } from "./configs/base";
+import themeConfig from "./configs/theme";
+import useMDItPlugins from "./tools/mdit";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -12,9 +12,12 @@ export default defineConfig({
   lastUpdated: true,
   ignoreDeadLinks: true,
   head: [
-    [ "meta", { name: "author", content: "Goozyshi", }, ],
-    [ "link", { rel: "icon", type: "image/png", href: withBaseURL("/avatar.png") }, ],
-    ...gaConfig
+    ["meta", { name: "author", content: "Goozyshi" }],
+    [
+      "link",
+      { rel: "icon", type: "image/png", href: withBaseURL("/avatar.png") },
+    ],
+    ...gaConfig,
   ],
   themeConfig,
   // 路由重写
@@ -23,17 +26,15 @@ export default defineConfig({
     "pages/:title/README.md": ":title.md",
     ":postsdir/:title/README.md": ":postsdir/:title.md",
   },
-  srcExclude: [
-    "./README.md",
-  ],
+  srcExclude: ["./README.md"],
   // markdown 增强
   markdown: {
     config: (md) => {
-      useMDItPlugins(md)
+      useMDItPlugins(md);
     },
     image: {
-      lazyLoading: true
+      lazyLoading: true,
     },
-    math: true
+    math: true,
   },
-})
+});
