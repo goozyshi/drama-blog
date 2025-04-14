@@ -12,15 +12,15 @@ outline: deep
 
 # TypeScript 类型与 Vue 应用（下）
 
-# TypeScript 泛型
+## TypeScript 泛型
 
 泛型是 TypeScript 中最强大的特性之一，它允许我们创建可复用的组件，这些组件可以支持多种类型，而不仅仅是单一类型。泛型为我们提供了在保持类型安全的同时实现代码复用的能力。
 
-## 泛型的基本概念
+### 泛型的基本概念
 
 泛型就像是类型的函数，允许我们在定义函数、接口或类时不预先指定具体的类型，而在使用时再指定类型。
 
-### 泛型函数示例
+#### 泛型函数示例
 
 让我们从一个简单的恒等函数开始：
 
@@ -43,7 +43,7 @@ function identity<Type>(arg: Type): Type {
 
 在上面的泛型函数中，`Type`是一个类型变量，它捕获用户提供的类型，使我们可以在函数的参数和返回值之间建立类型关联。
 
-### 调用泛型函数的两种方式
+#### 调用泛型函数的两种方式
 
 ```typescript
 // 方式1：明确指定类型参数
@@ -98,7 +98,7 @@ const {
 } = useDataFetcher<User>(() => fetch("/api/user").then((r) => r.json()));
 ```
 
-## 使用泛型类型变量
+### 使用泛型类型变量
 
 当你创建泛型函数时，TypeScript 会强制你在函数体内正确使用这些泛型类型：
 
@@ -122,7 +122,7 @@ function loggingIdentity<Type>(arg: Array<Type>): Array<Type> {
 }
 ```
 
-## 泛型类型和接口
+### 泛型类型和接口
 
 我们可以创建泛型接口和类型别名：
 
@@ -168,7 +168,7 @@ const tableData = reactive<TableData<Product>>({
 });
 ```
 
-## 泛型类
+### 泛型类
 
 泛型也可以用于创建类：
 
@@ -248,7 +248,7 @@ const updateTheme = () => {
 };
 ```
 
-## 泛型约束
+### 泛型约束
 
 有时我们需要限制泛型的范围，确保它具有特定的属性或方法：
 
@@ -316,7 +316,7 @@ const products = [
 const { selectedItem, selectItem } = useItemSelector<Product>(products, "1");
 ```
 
-## 在泛型约束中使用类型参数
+### 在泛型约束中使用类型参数
 
 我们可以声明一个类型参数，被另一个类型参数所约束：
 
@@ -384,7 +384,7 @@ const { value: rememberMe } = useField(formData, "rememberMe");
 // const { value } = useField(formData, 'email');
 ```
 
-## 在泛型中使用类类型
+### 在泛型中使用类类型
 
 在 TypeScript 中，我们可以将类作为参数传递给泛型：
 
@@ -455,7 +455,7 @@ function useAuth() {
 }
 ```
 
-## 实际应用总结
+### 实际应用总结
 
 泛型在 Vue 项目中有广泛的应用，尤其在以下场景中特别有用：
 
@@ -467,16 +467,16 @@ function useAuth() {
 
 通过掌握泛型，你可以编写更通用、更灵活且类型安全的代码，从而提高代码的可复用性和可维护性。
 
-# 泛型：简单理解与实用指南
+## 泛型：简单理解与实用指南
 
-## 什么是泛型？简单比喻
+### 什么是泛型？简单比喻
 
 泛型就像是"类型的变量"。想象你有一个装东西的盒子：
 
 - 普通盒子只能装一种特定物品（比如只能装书）
 - 泛型盒子可以装任何物品，但**一旦决定装什么，这个盒子就专门用来装这类物品**
 
-## 为什么需要泛型？
+### 为什么需要泛型？
 
 假设我们要编写一个函数，返回数组的第一个元素：
 
@@ -503,9 +503,9 @@ function firstElement<T>(arr: T[]): T {
 2. 灵活处理不同类型（与具体类型相比）
 3. 提供编译时的类型检查
 
-## 泛型基本用法
+### 泛型基本用法
 
-### 1. 最简单的泛型函数
+#### 1. 最简单的泛型函数
 
 ```typescript
 // 定义
@@ -520,7 +520,7 @@ const str = identity<string>("你好");
 const num = identity(42); // TypeScript自动推断为number类型
 ```
 
-### 2. 多个类型参数
+#### 2. 多个类型参数
 
 ```typescript
 // 键值对函数
@@ -532,7 +532,7 @@ const nameAge = pair("年龄", 30); // [string, number]
 const userActive = pair(101, true); // [number, boolean]
 ```
 
-### 3. 泛型接口和类型
+#### 3. 泛型接口和类型
 
 ```typescript
 // 泛型接口
@@ -544,9 +544,9 @@ const stringBox: Box<string> = { value: "一段文字" };
 const numberBox: Box<number> = { value: 100 };
 ```
 
-## 在 Vue 开发中的实际应用
+### 在 Vue 开发中的实际应用
 
-### 1. 状态管理
+#### 1. 状态管理
 
 ```typescript
 // 简单的状态管理
@@ -565,7 +565,7 @@ const [name, setName] = useState("张三");
 const [count, setCount] = useState(0);
 ```
 
-### 2. 组件 props
+#### 2. 组件 props
 
 ```typescript
 // 列表组件
@@ -578,7 +578,7 @@ interface ListProps<T> {
 defineProps<ListProps<User>>();
 ```
 
-## 泛型约束：限制泛型的范围
+### 泛型约束：限制泛型的范围
 
 有时我们需要限制泛型变量必须具有某些特性：
 
@@ -599,7 +599,7 @@ showName({ name: "张三", age: 30 });
 // showName({ age: 30 }); // 错误：缺少name属性
 ```
 
-## 理解泛型的几个要点
+### 理解泛型的几个要点
 
 1. **泛型不是万能的**：泛型只在类型层面工作，运行时没有泛型的概念
 
@@ -611,13 +611,13 @@ showName({ name: "张三", age: 30 });
 
 希望这个简短的解释能帮助你更好地理解泛型。记住，泛型的核心目的是让你创建可重用的组件，同时保持类型安全。
 
-# TypeScript 的 keyof 操作符
+## TypeScript 的 keyof 操作符
 
-## keyof 操作符基本概念
+### keyof 操作符基本概念
 
 `keyof`是 TypeScript 中一个强大的类型操作符，它作用于对象类型，返回该对象所有属性名组成的联合类型。
 
-### 基本用法
+#### 基本用法
 
 ```typescript
 // 对普通对象使用keyof
@@ -633,9 +633,9 @@ type PersonKeys = keyof Person;
 
 `keyof`提取的是属性名的类型，而不是属性值的类型。这个联合类型包含了对象所有的属性名。
 
-## keyof 与不同类型的交互
+### keyof 与不同类型的交互
 
-### 对象字面量类型
+#### 对象字面量类型
 
 ```typescript
 type Point = { x: number; y: number };
@@ -643,7 +643,7 @@ type PointKeys = keyof Point;
 // 结果: type PointKeys = "x" | "y"
 ```
 
-### 带索引签名的类型
+#### 带索引签名的类型
 
 当对象类型带有索引签名时，`keyof`的行为有所不同：
 
@@ -661,7 +661,7 @@ type KeysOfStringIndex = keyof StringIndex;
 
 注意：对于字符串索引签名，`keyof`返回`string | number`，这是因为在 JavaScript 中，对象的属性名会被强制转为字符串，所以`obj[0]`和`obj["0"]`是等价的。
 
-### 数字字面量属性名
+#### 数字字面量属性名
 
 当对象使用数字作为属性名时，`keyof`会返回数字字面量联合类型：
 
@@ -677,7 +677,7 @@ type NumericKeys = keyof typeof NumericObject;
 // 结果: type NumericKeys = 1 | 2 | 3
 ```
 
-### Symbol 类型属性名
+#### Symbol 类型属性名
 
 TypeScript 也支持 Symbol 类型的属性名：
 
@@ -713,7 +713,7 @@ function useStringKey<T, K extends Extract<keyof T, string>>(o: T, k: K) {
 }
 ```
 
-## 在 Vue 项目中应用 keyof
+### 在 Vue 项目中应用 keyof
 
 `keyof`在 Vue 项目中非常有用，尤其是处理组件 props 和响应式数据时：
 
@@ -741,9 +741,9 @@ const isDisabled = useProp(props, "disabled");
 // const color = useProp(props, 'color');
 ```
 
-## 实际应用例子
+### 实际应用例子
 
-### 对象属性安全访问
+#### 对象属性安全访问
 
 `keyof`常用于创建类型安全的对象属性访问函数：
 
@@ -765,7 +765,7 @@ const userName = getProperty(user, "name");
 // getProperty(user, "email");
 ```
 
-### 创建部分对象选择器
+#### 创建部分对象选择器
 
 ```typescript
 function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
@@ -789,7 +789,7 @@ const basicInfo = pick(user, ["name", "age"]);
 // 结果类型: { name: string; age: number }
 ```
 
-### 类型映射
+#### 类型映射
 
 `keyof`在映射类型中很常用，例如创建一个所有属性都为只读的类型：
 
@@ -811,7 +811,7 @@ type ReadonlyUser = Readonly<User>;
 // }
 ```
 
-## 使用 keyof 的最佳实践
+### 使用 keyof 的最佳实践
 
 1. **泛型约束**：使用`keyof`约束泛型参数，确保只访问对象存在的属性
 
@@ -821,7 +821,7 @@ type ReadonlyUser = Readonly<User>;
 
 4. **配合映射类型**：与映射类型结合使用，可以创建强大的类型转换工具
 
-## 总结
+### 总结
 
 `keyof`操作符是 TypeScript 类型系统中的强大工具，它让我们能够：
 
@@ -831,9 +831,9 @@ type ReadonlyUser = Readonly<User>;
 
 掌握`keyof`操作符对于编写类型安全的 TypeScript 代码至关重要，特别是在处理对象和创建通用工具函数时。
 
-# TypeScript 的 typeof 类型操作符
+## TypeScript 的 typeof 类型操作符
 
-## 基本概念与 JavaScript 中的 typeof 区别
+### 基本概念与 JavaScript 中的 typeof 区别
 
 在 TypeScript 中，有两种`typeof`操作符:
 
@@ -849,7 +849,7 @@ let message = "你好";
 type MessageType = typeof message; // 得到类型: string
 ```
 
-## typeof 的基本用法
+### typeof 的基本用法
 
 TypeScript 的`typeof`操作符让我们能够从已有的值中提取类型信息，这在许多场景下非常有用：
 
@@ -877,7 +877,7 @@ const newUser: User = {
 };
 ```
 
-## 在 Vue 项目中使用 typeof
+### 在 Vue 项目中使用 typeof
 
 在 Vue 项目中，`typeof`对提取复杂对象的类型特别有用：
 
@@ -913,7 +913,7 @@ const paginationInfo = ref<Pagination>({
 });
 ```
 
-## 对函数使用 typeof
+### 对函数使用 typeof
 
 `typeof`可以获取函数的类型，包括其参数和返回值类型：
 
@@ -937,7 +937,7 @@ const enhancedFormatter: FormatUserFunction = (id, name) => {
 };
 ```
 
-## 与 ReturnType 结合使用
+### 与 ReturnType 结合使用
 
 `typeof`与内置的`ReturnType`工具类型结合使用特别强大，可以提取函数返回值的类型：
 
@@ -987,7 +987,7 @@ type UserStore = ReturnType<typeof useUserStore>;
 type UpdateResult = ReturnType<UserStore["updateUser"]>;
 ```
 
-## 对枚举(enum)使用 typeof
+### 对枚举(enum)使用 typeof
 
 TypeScript 中的枚举在运行时会被编译成对象，使用`typeof`可以获取这个对象的类型：
 
@@ -1028,7 +1028,7 @@ function updateStatus(newStatus: StatusType) {
 }
 ```
 
-## typeof 的限制
+### typeof 的限制
 
 TypeScript 对`typeof`的使用有意设置了一些限制：
 
@@ -1053,7 +1053,7 @@ type Result = typeof getMessage();
 type MessageType = ReturnType<typeof getMessage>;
 ```
 
-## 与类型断言的区别
+### 与类型断言的区别
 
 不要混淆`typeof`和类型断言：
 
@@ -1066,7 +1066,7 @@ type User = typeof user;
 const element = document.getElementById("app") as HTMLElement;
 ```
 
-## 最佳实践
+### 最佳实践
 
 1. **提取复杂类型**：使用`typeof`从实际数据结构中提取类型，而不是手动定义
 
@@ -1076,7 +1076,7 @@ const element = document.getElementById("app") as HTMLElement;
 
 4. **枚举键提取**：使用`keyof typeof Enum`获取枚举的键值联合类型
 
-## 在 Vue 项目中的实用例子
+### 在 Vue 项目中的实用例子
 
 ```typescript
 // 1. 提取组件props类型
@@ -1116,13 +1116,13 @@ type AppState = typeof state;
 
 通过掌握`typeof`类型操作符，你可以更优雅地处理 TypeScript 中的类型推断，减少手动类型定义的工作量，同时保持类型安全。
 
-# TypeScript 高级类型操作指南
+## TypeScript 高级类型操作指南
 
-## 1. 索引访问类型
+### 1. 索引访问类型
 
 索引访问类型允许我们通过索引获取其他类型中的特定部分。
 
-### 基本用法
+#### 基本用法
 
 ```typescript
 // 通过属性名获取属性类型
@@ -1136,7 +1136,7 @@ type NameOrAge = Person["name" | "age"]; // type NameOrAge = string | number
 type AllValues = Person[keyof Person]; // type AllValues = string | number | boolean
 ```
 
-### 实用技巧：从数组生成联合类型
+#### 实用技巧：从数组生成联合类型
 
 ```typescript
 // 创建一个只接受特定值的类型
@@ -1149,11 +1149,11 @@ function getAppAPI(app: AppType) {
 }
 ```
 
-## 2. 条件类型
+### 2. 条件类型
 
 条件类型允许我们根据类型的特征选择不同的类型，类似于三元表达式。
 
-### 基本语法
+#### 基本语法
 
 ```typescript
 // 基本语法
@@ -1173,7 +1173,7 @@ type TypeName<T> = T extends string
   : "object";
 ```
 
-### 使用 infer 提取类型
+#### 使用 infer 提取类型
 
 ```typescript
 // 提取数组元素类型
@@ -1185,7 +1185,7 @@ type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
 type FuncReturn = ReturnType<() => string>; // string
 ```
 
-### 条件类型的分发特性
+#### 条件类型的分发特性
 
 ```typescript
 // 分发条件类型
@@ -1197,11 +1197,11 @@ type ToArrayNonDist<T> = [T] extends [any] ? T[] : never;
 type NonDistResult = ToArrayNonDist<string | number>; // (string | number)[]
 ```
 
-## 3. 映射类型
+### 3. 映射类型
 
 映射类型允许我们基于旧类型创建新类型，通过遍历现有类型的属性。
 
-### 基本映射
+#### 基本映射
 
 ```typescript
 // 将所有属性转换为布尔类型
@@ -1218,7 +1218,7 @@ type FeaturesFlags = OptionsFlags<Features>;
 // { darkMode: boolean; newUserProfile: boolean; }
 ```
 
-### 修饰符
+#### 修饰符
 
 ```typescript
 // 移除只读属性
@@ -1232,7 +1232,7 @@ type Required<Type> = {
 };
 ```
 
-### 键名重映射
+#### 键名重映射
 
 ```typescript
 // 使用as重新映射键名
@@ -1250,9 +1250,9 @@ type PersonGetters = Getters<Person>;
 // { getName: () => string; getAge: () => number; }
 ```
 
-## 在 Vue 项目中的应用
+### 在 Vue 项目中的应用
 
-### 类型安全的组件 Props
+#### 类型安全的组件 Props
 
 ```typescript
 // 定义可选的Props
@@ -1271,7 +1271,7 @@ type LoadingState<T> =
   | { status: "error"; error: string };
 ```
 
-### API 类型处理
+#### API 类型处理
 
 ```typescript
 // 从API响应中提取数据类型
